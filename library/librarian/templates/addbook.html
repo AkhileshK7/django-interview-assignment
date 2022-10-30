@@ -1,0 +1,25 @@
+<h1>Add book</h1>
+
+<form action="addbookrecord/" method="post">
+  {% csrf_token %}
+  Title:<br>
+  <input name="name" required>
+  <br><br>
+  Author Name:<br>
+  <input name="author">
+  <br><br>
+  Publisher:<br>
+  <input name="publisher">
+  <br><br>
+  Year of Publication:<br>
+  <input name="year">
+  <br><br>
+  Edition:<br>
+  <input name="edition">
+  <br><br>
+  Available:
+  <input type="hidden" name="availability" value="False">
+  <input type="checkbox" name="availability" value="True">
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
