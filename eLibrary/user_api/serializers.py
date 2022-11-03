@@ -16,8 +16,6 @@ from .models import LibraryUser
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
 
 # Serializer for the librarian registration endpoint
 class LibrarianRegisterSerializer(serializers.ModelSerializer):
@@ -93,21 +91,17 @@ class MemberRegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-# Serializer for JWT generation endpoint
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-
-    @classmethod
-    def get_token(cls, user):
-        token = super(MyTokenObtainPairSerializer, cls).get_token(user)
-
-        # Adding custon claims
-        token['username'] = user.username
-        token['user_role'] = user.user_role
-        return token
-
-
 # Serializer for user details endpoint
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = LibraryUser
         fields = ['id', 'username', 'user_role']
+
+
+# Serializer for member details endpoint
+class MemberSerializer(serializers.ModelSerializer):
+    view = serializers.HyperlinkedIdentityField(view_name='member')
+
+    class Meta:
+        model = LibraryUser
+        fields = ['id', 'username', 'user_role', 'view']
